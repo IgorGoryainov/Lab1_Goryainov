@@ -17,6 +17,16 @@ int check_array(std::string file_name)
     return flag;
 }
 
+void load_report(int flag_fail)
+{
+    std::ofstream ofs;
+    ofs.open("report.txt", std::ios::trunc);
+    if (flag_fail != 1)
+        ofs << "Input correct, task finished successfuly";
+    else 
+        ofs << "Input incorrect, task fail";
+}
+
 int get_len(std::string file_name)
 {
     int n = 0;
@@ -67,6 +77,7 @@ int task1_get(std::string file_name)   //get max len of raising array
         return max_len;
     }
     else return NULL;
+    
 }
 
 void task1_write(int num)
@@ -92,10 +103,18 @@ void task1_write(int num)
         ofs << val;
         ofs.close();
     }
+    else
+    {
+        ofs.open(output_name, std::ios::trunc);
+        ofs << "Incorrect input";
+        ofs.close();
+    }
+
 }
 
 int main()
 {
+    
     for (int i = 1; i < 6; i++)
         task1_write(i);
 }
