@@ -2,6 +2,24 @@
 #include <ctime>
 #include <fstream>
 
+bool check_val(int a, int b)
+{
+    bool flag_fail = 0;
+    if ((a < 0) || (b < 0)) flag_fail = 1;
+    if (a > b)  flag_fail = 1;
+    return flag_fail;
+}
+
+void load_report(int flag_fail)
+{
+    std::ofstream ofs;
+    ofs.open("report.txt", std::ios::trunc);
+    if (flag_fail != 1)
+        ofs << "Input correct, task finished successfuly";
+    else 
+        ofs << "Input incorrect, task fail";
+}
+
 int** generate_matric(int n, int a, int b)
 {
     srand(time(0));
@@ -66,12 +84,16 @@ int main()
     matric = reader(n);
     matric = transponate_matric(n, matric);
     writer(n, matric);
-    for (int i = 0; i < n; i++)
+    if (!check_val(a, b))
     {
-        for (int j = 0; j < n; j++)
-            std::cout << matric[i][j] << ' ';
-        std::cout << std::endl;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+                std::cout << matric[i][j] << ' ';
+            std::cout << std::endl;
+        }
     }
+    load_report(check_val(a, b));
     for (int i = 0; i < n; i++)
         delete[]matric[i];
     return 0;
